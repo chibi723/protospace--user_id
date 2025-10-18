@@ -1,0 +1,18 @@
+<div class="main">
+  <div class="inner">
+    <div class="form__wrapper">
+      <h2 class="page-heading">プロトタイプ編集</h2>
+      
+      <%# @prototypeをモデルとして指定することで、自動的にPATCH/PUTメソッドでupdateアクションに送信されます。 %>
+      <%= form_with model: @prototype, local: true do |f| %>
+        
+        <%# _form.html.erb を呼び出し、ローカル変数 f を渡す %>
+        <%= render 'form', f: f, model: @prototype %>
+
+        <div class="actions">
+          <%= f.submit "更新する", class: :form__btn  %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

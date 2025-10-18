@@ -1,0 +1,102 @@
+<div class="main">
+  <div class="inner">
+    <div class="prototype__wrapper">
+      
+      <%# プロトタイプ名 %>
+      <div class="prototype__header">
+        <h1 class="prototype__title">
+          <%= @prototype.title %>
+        </h1>
+        <p class="prototype__user">
+          by <%= link_to @prototype.user.name, user_path(@prototype.user) %>
+        </p>
+      </div>
+      
+      <%# プロトタイプ画像 %>
+      <div class="prototype__image">
+        <% if @prototype.image.attached? %>
+          <%= image_tag @prototype.image %>
+        <% else %>
+          <%= image_tag 'sample1.jpg', alt: 'サンプル画像' %>
+        <% end %>
+      </div>
+
+      <%# 編集・削除ボタンの表示制御（投稿者のみに表示） %>
+      <% if user_signed_in? && current_user.id == @prototype.user_id %>
+        <div class="prototype__manage">
+          <%= link_to "編集する", edit_prototype_path(@prototype), class: "btn btn-outline-secondary" %>
+          <%= link_to "削除する", prototype_path(@prototype), data: { turbo_method: :delete }, class: "btn btn-outline-danger" %>
+        </div>
+      <% end %>
+
+      <%# プロトタイプ情報詳細 %>
+      <table class="prototype__table">
+        <tr>
+          <th class="prototype__label">キャッチコピー</th>
+          <%# キャッチコピー %>
+          <td class="prototype__value"><%= @prototype.catch_copy %></td>
+        </tr>
+        <tr>
+          <th class="prototype__label">コンセプト</th>
+          <%# コンセプト %>
+          <td class="prototype__value"><%= @prototype.concept %></td>
+        </tr>
+      </table>
+
+      <%# 投稿者情報 %>
+      <div class="prototype__user">
+        <p class="user__title">
+          投稿者
+        </p>
+        <%# 投稿者名とユーザー詳細ページへのリンク %>
+        <a href="<%= user_path(@prototype.user) %>" class="user__name">
+          <%= @prototype.user.name %>
+        </a>
+      </div>
+    </div>
+    <%# プロトタイプ情報、編集/削除ボタンなど既存のコードの下に追記 %>
+    <div class="prototype__comments">
+      <div class="comments__area">
+        <h3>コメント</h3>
+
+        <%# ログインしている場合のみフォームを表示 %>
+        <% if user_signed_in? %>
+          <%# form_with の model: [@prototype, @comment] がネストされたパス (prototype_comments_path) を生成します %>
+          <%= form_with model: [@prototype, @comment], local: true do |f| %>
+            <div class="comment-field">
+              <%= f.text_field :text, placeholder: "コメントを入力..." %> 
+            </div>
+            <div class="actions">
+              <%= f.submit "送信する", class: "btn" %>
+            </div>
+          <% end %>
+        <% else %>
+          <p>コメントの投稿には<a href="<%= new_user_session_path %>">ログイン</a>が必要です。</p>
+        <% end %>
+      </div>
+
+      <%# コメント一覧 %>
+
+      <ul class="comments-list">
+        <% if @comments.any? %>
+          <% @comments.each do |comment| %>
+            <li class="comment">
+              <ul>
+                <li>
+                  <%= comment.text %> 
+                  <span class="comment-user">
+                     (<%= link_to comment.user.name, user_path(comment.user) %>)
+                  </span>
+                </li>
+              </ul>
+            </li>
+          <% end %>
+        <% else %>
+          <li class="no-comment">
+            まだコメントはありません。
+           </li>
+         <% end %>
+      </ul>
+    </div>        
+  </div>
+</div>

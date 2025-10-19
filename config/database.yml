@@ -53,3 +53,4 @@ production:
   database: protospace_45759_production
   username: protospace_45759
   password: <%= ENV["PROTOSPACE_USER_ID_DATABASE_PASSWORD"] %>
+  encoding: unicode

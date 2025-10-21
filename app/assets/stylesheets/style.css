@@ -1,15 +1,31 @@
 /* リセットCSS */
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%; /* ページ全体をビューポートの高さに合わせる */
+}
+
 body { font-family: "Noto Sans JP", sans-serif; color: #3b4043; }
 li { list-style: none; }
 img { max-width: 100%; vertical-align: bottom; }
 a { text-decoration: none; color: #3b4043; }
+
+#wrapper {
+  min-height: 100%;       /* コンテンツが少なくてもビューポート全体をカバー */
+  display: flex;          /* Flexboxを有効にする */
+  flex-direction: column; /* 要素を縦方向に並べる */
+}
 
 /* ヘッダー */
 .header { background-color: #f1f8fe; padding: 20px 0; margin-bottom: 48px; }
 .inner { width: 1024px; margin: 0 auto; }
 .nav { display: flex; justify-content: space-between; align-items: center; }
 .logo { width: 200px; }
+.nav__items {
+  display: flex;
+  gap: 10px; /* ボタン間の間隔 */
+  align-items: center;
+}
 .nav__btn, .nav__logout {
   display: inline-block; padding: 0.4em 1.6em; border-radius: 3px;
   text-decoration: none; user-select: none; font-size: 0.8em;
@@ -19,16 +35,86 @@ a { text-decoration: none; color: #3b4043; }
 .nav__logout { color: #87CEFA; }
 .nav__logout:hover { opacity: 0.5; }
 
+.main-content {
+  flex: 1; /* 残りのスペースをすべて占有し、フッターを画面下端に押し出す */
+}
+
 /* メイン */
 .greeting { margin-bottom: 20px; }
 .greeting__link { text-decoration: underline; }
-.page-heading { font-size: 30px; margin-bottom: 28px; text-align: center; }
+.page-heading { font-size: 30px; margin-bottom: 28px; text-align: left; }
 .card__wrapper { display: flex; flex-wrap: wrap; justify-content: space-between; }
 .card { width: calc((100% - 50px)/3); margin-bottom: 40px; border: 1px solid #eee; padding: 16px; border-radius: 4px; }
 .card__img { margin-bottom: 12px; }
 .card__title { font-size: 20px; font-weight: bold; display: block; margin-bottom: 8px; }
 .card__summary { font-size: 16px; margin-bottom: 8px; }
 .card__user { display: block; font-size: 12px; color: #999; text-align: right; text-decoration: underline; }
+
+.new-proto-button {
+  /* ボタンの基本設定 */
+  display: inline-block;
+  padding: 8px 16px; 
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: normal; 
+  color: #ffffff;
+  
+  /* グラデーションの背景 */
+  background: linear-gradient(to bottom, #7fcaf3, #4a90e2);
+  
+  /* わずかな影 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  
+  line-height: 1.4;
+  margin-top: 20px; 
+  margin-bottom: 20px; 
+}
+.new-proto-button:hover {
+  background: linear-gradient(to bottom, #69b9e5, #4382cc);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+.new-proto-button:active {
+  background: #4a90e2; 
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset;
+  transform: translateY(1px);
+}
+
+/* ログインボタン */
+.nav__login { 
+  display: inline-block; 
+  padding: 0.4em 1.6em; 
+  border-radius: 3px;
+  text-decoration: none; 
+  user-select: none; 
+  font-size: 0.8em;
+  
+  border: 1px #87CEFA solid; /* 青い枠線 */
+  color: #87CEFA; /* 青い文字色 */
+  transition: 0.4s;
+}
+.nav__login:hover {
+  background-color: #f0f8ff; /* ホバーで薄い水色に */
+}
+
+/* ログアウトボタン */
+.nav__logout { 
+  display: inline-block; 
+  padding: 0.4em 1.6em; 
+  border-radius: 3px;
+  text-decoration: none; 
+  user-select: none; 
+  font-size: 0.8em;
+  
+  border: 1px #87CEFA solid; /* 青い枠線 */
+  color: #87CEFA; /* 青い文字色 */
+  transition: 0.4s;
+}
+.nav__login:hover {
+  background-color: #f0f8ff; /* ホバーで薄い水色に */
+}
 
 /* フッター */
 .footer { background-color: #999; padding: 10px 0; }
@@ -43,4 +129,207 @@ a { text-decoration: none; color: #3b4043; }
 @media (max-width: 599px) {
   .card { width: 100%; margin-bottom: 60px; }
   .page-heading { font-size: 20px; }
+}
+
+/* --- プロトタイプ詳細ページ (show) --- */
+
+.prototype__wrapper {
+/* 最大幅を設定し、中央に配置 */
+  max-width: 800px; 
+  margin: 0 auto;
+  
+/* ページのテキスト要素を中央揃えに */
+  text-align: center;
+  margin-bottom: 50px; 
+}
+
+/* ページタイトル (プロトタイプ1) */
+.prototype__title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px; 
+}
+
+/* 投稿者名  */
+.prototype__user {
+  display: block;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+  text-decoration: underline; 
+}
+
+/* 編集・削除ボタンの共通スタイル */
+.prototype__manage .btn {
+  display: inline-block;
+  padding: 0.5m 0.4em; /* 適切なパディング */
+  border-radius: 3px;
+  text-decoration: none;
+  user-select: none;
+  font-size: 0.8em;
+  
+  border: 1px #555 solid; 
+  color: #555; 
+  background-color: #fff; /* 背景色を白に */
+  transition: 0.4s;
+  cursor: pointer; /* マウスカーソルをポインターに */
+  margin-bottom: 10px;
+}
+
+/* ホバー時のスタイル */
+.prototype__manage .btn:hover {
+  background-color: #87CEFA; /* ホバーで背景を青に */
+  color: #fff; /* ホバーで文字色を白に */
+}
+
+/* 2. 画像エリアのスタイル */
+.prototype__image-wrapper {
+  margin: 0 auto;
+  display: inline-block;
+  width: 500px; /* 画像エリアの幅 */
+  height: 300px; /* 画像エリアの高さ */
+ 
+  margin-bottom: 40px; 
+  
+  /* 画像やアイコンを中央に配置する調整 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 3. 詳細セクションのスタイル */
+.detail-section {
+  margin-bottom: 10px; /* 各セクション間の余白 */
+}
+
+/* 各セクションの見出し (キャッチコピー, コンセプト) */
+.detail-heading {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-top: 10px; /* 上の要素との余白 */
+}
+
+/* 各セクションの内容 */
+.detail-content {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* 4. 投稿者情報エリアの修正 */
+.prototype__user-info {
+  /* 必要に応じて背景や枠線を追加 */
+  margin-top: 50px;
+  padding-top: 20px;
+}
+
+/* --- プロトタイプ詳細ページ内のコメントエリア --- */
+
+.prototype__comments {
+  /* コメントエリア全体の背景と枠線 */
+  background-color: #f8f8f8; /* 薄いグレーの背景 */
+  padding: 30px; /* 内側の余白 */
+  margin-top: 50px; /* 上のコンテンツとの余白 */
+  border-radius: 4px;
+  text-align: left;
+}
+
+.comments__area h3 {
+  /* コメント見出し */
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* コメント入力フォームのスタイル */
+.comment-field {
+  margin-bottom: 10px;
+}
+
+.comment-field input[type="text"] {
+  width: 30%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* 「送信する」ボタンのスタイル  */
+.comments__area .actions .btn {
+  display: inline-block;
+  padding: 8px 16px; 
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: normal; 
+  color: #ffffff;
+  
+  /* グラデーションの背景 */
+  background: linear-gradient(to bottom, #7fcaf3, #4a90e2);
+  
+  /* わずかな影 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  line-height: 1.4;
+
+  text-align: left;
+}
+
+.comments__area .actions .btn:hover {
+  background: linear-gradient(to bottom, #69b9e5, #4382cc);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.comments__area .actions .btn:active {
+  background: #4a90e2; 
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset;
+  transform: translateY(1px);
+}
+
+
+/* コメント一覧のスタイル */
+.comments-list {
+  list-style-type: none; /* リストマーカーをリセット */
+  padding-left: 0;
+  margin-top: 20px;
+}
+
+.comment {
+  /* 四角いリストマーカーを模倣 */
+  position: relative;
+  padding-left: 15px; 
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.comment::before {
+  /* 疑似要素で四角いマーカーを作成 */
+  content: "■"; 
+  color: #3b4043; /* テキストと同じ色 */
+  font-size: 8px; /* サイズを小さく */
+  position: absolute;
+  left: 0;
+  top: 4px;
+}
+
+.comment-user {
+  font-size: 12px;
+  color: #999;
+  margin-left: 5px;
+}
+
+.no-comment {
+  font-size: 14px;
+  color: #999;
+}
+
+/* --- ユーザー詳細エリア --- */
+
+.user__wrapper {
+  /* 最大幅を設定し、中央に配置 */
+  text-align: left;
+  /* ページのテキスト要素を中央揃えに */
+  margin-bottom: 50px; 
 }

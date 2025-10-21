@@ -31,7 +31,7 @@
     </div>
 
     <%# ユーザーの投稿したプロトタイプ一覧 %>
-    <div class="user__prototypes">
+    <%#<div class="user__prototypes"> %>
       <h2 class="page-heading">
         <%= @user.name %>さんのプロトタイプ一覧
       </h2>
@@ -39,6 +39,6 @@
         <%# collectionオプションを使用して、_prototype.html.erb を呼び出します %>
         <%= render partial: 'prototypes/prototype', collection: @prototypes %>
       </div>
-    </div>
+    <%#</div> %>
   </div>
 </div>

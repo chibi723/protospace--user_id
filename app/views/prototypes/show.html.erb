@@ -11,9 +11,16 @@
           by <%= link_to @prototype.user.name, user_path(@prototype.user) %>
         </p>
       </div>
+
+      <%# 編集・削除ボタンの表示制御（投稿者のみに表示） %>
+      <% if user_signed_in? && current_user.id == @prototype.user_id %>
+        <div class="prototype__manage">
+          <%= link_to "編集する", edit_prototype_path(@prototype), class: "btn" %>
+          <%= link_to "削除する", prototype_path(@prototype), data: { turbo_method: :delete }, class: "btn" %> 
+      <% end %>
       
       <%# プロトタイプ画像 %>
-      <div class="prototype__image">
+      <div class="prototype__image-wrapper">
         <% if @prototype.image.attached? %>
           <%= image_tag @prototype.image %>
         <% else %>
@@ -21,39 +28,18 @@
         <% end %>
       </div>
 
-      <%# 編集・削除ボタンの表示制御（投稿者のみに表示） %>
-      <% if user_signed_in? && current_user.id == @prototype.user_id %>
-        <div class="prototype__manage">
-          <%= link_to "編集する", edit_prototype_path(@prototype), class: "btn btn-outline-secondary" %>
-          <%= link_to "削除する", prototype_path(@prototype), data: { turbo_method: :delete }, class: "btn btn-outline-danger" %>
-        </div>
-      <% end %>
-
       <%# プロトタイプ情報詳細 %>
-      <table class="prototype__table">
-        <tr>
-          <th class="prototype__label">キャッチコピー</th>
-          <%# キャッチコピー %>
-          <td class="prototype__value"><%= @prototype.catch_copy %></td>
-        </tr>
-        <tr>
-          <th class="prototype__label">コンセプト</th>
-          <%# コンセプト %>
-          <td class="prototype__value"><%= @prototype.concept %></td>
-        </tr>
-      </table>
-
-      <%# 投稿者情報 %>
-      <div class="prototype__user">
-        <p class="user__title">
-          投稿者
-        </p>
-        <%# 投稿者名とユーザー詳細ページへのリンク %>
-        <a href="<%= user_path(@prototype.user) %>" class="user__name">
-          <%= @prototype.user.name %>
-        </a>
+      <div class="detail-section">
+        <h3 class="detail-heading">キャッチコピー</h3>
+        <p class="detail-content"><%= @prototype.catch_copy %></p>
+      </div>
+      
+      <div class="detail-section">
+        <h3 class="detail-heading">コンセプト</h3>
+        <p class="detail-content"><%= @prototype.concept %></p>
       </div>
     </div>
+
     <%# プロトタイプ情報、編集/削除ボタンなど既存のコードの下に追記 %>
     <div class="prototype__comments">
       <div class="comments__area">
@@ -81,14 +67,10 @@
         <% if @comments.any? %>
           <% @comments.each do |comment| %>
             <li class="comment">
-              <ul>
-                <li>
                   <%= comment.text %> 
                   <span class="comment-user">
                      (<%= link_to comment.user.name, user_path(comment.user) %>)
                   </span>
-                </li>
-              </ul>
             </li>
           <% end %>
         <% else %>

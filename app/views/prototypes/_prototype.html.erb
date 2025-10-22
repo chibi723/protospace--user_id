@@ -1,27 +1,10 @@
 <div class="card">
-  <%# 画像へのリンクを詳細ページへ修正 %>
-  <a href="<%= prototype_path(prototype) %>">
-     <div class="card__img">
-        <% if prototype.image.attached? %>
-          <%# 画像が添付されている場合 %>
-          <%= image_tag prototype.image, class: :card__img %>
-        <% else %>
-          <%# 画像が添付されていない場合の代替表示 %>
-          <%= image_tag 'sample1.jpg', class: :card__img, alt: 'サンプル画像' %>
-        <% end %>
-     </div>
-  </a>
-
+  <%= link_to image_tag(prototype.image, class: :card__img ), prototype_path(prototype) %>
   <div class="card__body">
-    <%# プロトタイプ名とリンクを詳細ページへ修正 %>
-    <%= link_to prototype.title, prototype_path(prototype), class: "card__title" %>
-
-    <%# キャッチコピー %>
+    <%= link_to prototype.title, prototype_path(prototype), class: :card__title%>
     <p class="card__summary">
       <%= prototype.catch_copy %>
     </p>
-    
-    <%# 投稿者名へのリンク %>
-    <%= link_to prototype.user.name, user_path(prototype.user), class: "card__user" %>
+    <%= link_to "by #{prototype.user.name}", user_path(prototype.user), class: :card__user %>
   </div>
 </div>

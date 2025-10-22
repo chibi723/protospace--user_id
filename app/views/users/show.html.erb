@@ -1,9 +1,8 @@
 <div class="main">
   <div class="inner">
-    <%# ユーザー情報 %>
     <div class="user__wrapper">
       <h2 class="page-heading">
-        <%= @user.name %>さんの情報
+        <%= "#{@user.name}さんの情報"%>
       </h2>
       <table class="table">
         <tbody>
@@ -13,32 +12,24 @@
           </tr>
           <tr>
             <th class="table__col1">プロフィール</th>
-            <%# Userモデルに profile カラムがあることを想定しています %>
             <td class="table__col2"><%= @user.profile %></td>
           </tr>
           <tr>
             <th class="table__col1">所属</th>
-            <%# Userモデルに occupation カラムがあることを想定しています %>
             <td class="table__col2"><%= @user.occupation %></td>
           </tr>
           <tr>
             <th class="table__col1">役職</th>
-            <%# Userモデルに occupation カラムがあることを想定しています %>
             <td class="table__col2"><%= @user.position %></td>
           </tr>
         </tbody>
       </table>
-    </div>
-
-    <%# ユーザーの投稿したプロトタイプ一覧 %>
-    <%#<div class="user__prototypes"> %>
       <h2 class="page-heading">
-        <%= @user.name %>さんのプロトタイプ一覧
+        <%= "#{@user.name}さんのプロトタイプ"%>
       </h2>
-      <div class="card__wrapper">
-        <%# collectionオプションを使用して、_prototype.html.erb を呼び出します %>
-        <%= render partial: 'prototypes/prototype', collection: @prototypes %>
+      <div class="user__card">
+        <%= render partial: 'prototypes/prototype', collection: @user.prototypes %>
       </div>
-    <%#</div> %>
+    </div>
   </div>
 </div>
